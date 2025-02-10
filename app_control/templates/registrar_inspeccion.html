@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 mt-5" >
+                <form  id="inspeccionForm" method="POST" action="/registrar_inspeccion/" class="card card-body">
+                {% if user.is_authenticated %}
+                <h4 class="text-center">Hola, {{ user.username }}. ¿Qué ambiente deseas registrar hoy?</h4>
+                {% endif %}
+                {% csrf_token %}
+                <label for="ambiente" >Ambientes</label>
+
+                         <select name="ambientes" id="">
+                        <option value="Laboratorio_A">Laboratorio A</option>
+                        <option value="Laboratorio_B">Laboratorio B</option>
+                        <option value="Laboratorio_C">Laboratorio C</option>
+                        <option value="Laboratorio_D">Laboratorio D</option>
+                        <option value="Laboratorio_E">Laboratorio E</option>
+                        <option value="Laboratorio_F">Laboratorio F</option>
+                        <option value="Laboratorio_G">Laboratorio G</option>
+                        <option value="Laboratorio_H">Laboratorio H</option>
+                        <option value="Aula_101">Aula 101</option>
+                        <option value="Aula_102">Aula 102</option>
+
+                    </select>
+            
+                    <table class="table table-dark table-striped"">
+                        <tr>
+                            <th>Elemento</th>
+                            <th>Correcto</th>
+                            <th>Observado</th>
+                        </tr>
+                        <tr>
+                            <td>Equipo de Cómputo</td>
+                            <td><input type="radio" name="equipo_computo" value="C" checked></td>
+                            <td><input type="radio" name="equipo_computo" value="O"></td>
+                        </tr>
+                    </table>
+
+                <label>Equipo de Cómputo:</label>
+                <input type="radio" name="equipo_computo" value="C" checked> Correcto
+                <input type="radio" name="equipo_computo" value="O"> Observación
+                <br>
+            
+                <label>Proyector Multimedia:</label>
+                <input type="radio" name="proyector_multimedia" value="C" checked> Correcto
+                <input type="radio" name="proyector_multimedia" value="O"> Observación
+                <br>
+            
+                <label>Red:</label>
+                <input type="radio" name="red" value="C" checked> Correcto
+                <input type="radio" name="red" value="O"> Observación
+                <br>
+            
+                <label>Fluido Eléctrico:</label>
+                <input type="radio" name="fluido_electrico" value="C" checked> Correcto
+                <input type="radio" name="fluido_electrico" value="O"> Observación
+                <br>
+            
+                <label>Orden y Limpieza:</label>
+                <input type="radio" name="orden_limpieza" value="C" checked> Correcto
+                <input type="radio" name="orden_limpieza" value="O"> Observación
+                <br>
+            
+                <label>Módulos:</label>
+                <input type="radio" name="modulos" value="C" checked> Correcto
+                <input type="radio" name="modulos" value="O"> Observación
+                <br>
+            
+                <button class="btn btn-primary type="submit">Guardar</button>
+            </form>
+
+
+        </div>
+        <script>
+        document.getElementById("inspeccionForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            let formData = new FormData(this);
+
+            fetch("/registrar_inspeccion/", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.mensaje);
+            })
+            .catch(error => console.error("Error:", error));
+        });
+        </script>
+
+        </div>
+    </div>
+</main>
+
+
+{% endblock %}

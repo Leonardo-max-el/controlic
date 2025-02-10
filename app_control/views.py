@@ -28,7 +28,7 @@ def signup(request):
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)
-                return redirect('Inspeccion')
+                return redirect('registrar_inspeccion')
                 # return render(request, 'signup.html', {'form': UserCreationForm(), 'error': 'Usuario creado correctamente'})
             except IntegrityError:
                 return render(request, 'signup.html', {'form': UserCreationForm(), 'error': 'El usuario ya existe'})
@@ -62,9 +62,15 @@ def login_view(request):
 
 
 
+# def registrar_inspeccion(request):
+#     return render(request,'registrar_inspeccion.html')
+
 def registrar_inspeccion(request):
     if request.method == "POST":
-        laboratorio = "Laboratorio A"
+
+        # Obtener los datos del formulario
+        usuario = request.user
+        laboratorio = request.POST.get("ambientes")
         equipo_computo = request.POST.get("equipo_computo")
         proyector_multimedia = request.POST.get("proyector_multimedia")
         red = request.POST.get("red")
@@ -74,6 +80,7 @@ def registrar_inspeccion(request):
 
         # Guardar en la base de datos
         Inspeccionambientes.objects.create(
+            usuario=usuario,
             laboratorio=laboratorio,
             equipo_computo=equipo_computo,
             proyector_multimedia=proyector_multimedia,
@@ -83,6 +90,9 @@ def registrar_inspeccion(request):
             modulos=modulos
         )
 
+
+         
+
         return JsonResponse({"mensaje": "Registro guardado exitosamente"}, status=200)
 
-    return render(request, "inspeccion.html") 
+    return render(request, "registrar_inspeccion.html") 

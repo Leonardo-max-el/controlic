@@ -2,14 +2,17 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+
+
 class Inspeccionambientes(models.Model):
     ESTADO_CHOICES = [
         ("C", "Correcto"),
         ("O", "Observación"),
     ]
-
+    
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_registro = models.DateTimeField(auto_now_add=True)
-    laboratorio = models.CharField(max_length=50, default="Laboratorio A")
+    laboratorio = models.CharField(max_length=50, choices=ESTADO_CHOICES)
     equipo_computo = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     proyector_multimedia = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     red = models.CharField(max_length=1, choices=ESTADO_CHOICES)
