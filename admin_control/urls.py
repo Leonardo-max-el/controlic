@@ -21,6 +21,9 @@ from app_control import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.home, name='home'), 
+    path('', views.home, name='home'), 
     path('signup/', views.signup, name='signup'),
+    path('logout/', views.clouses, name='logout'),
+    path('login_view/',views.login_view, name='login_view'),
+    path('registrar_inspeccion/', views.registrar_inspeccion, name='registrar_inspeccion'),
 ]

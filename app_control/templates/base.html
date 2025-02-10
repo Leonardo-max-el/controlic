@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Laboratorios</title>
+</head>
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/registrar_inspeccion/">controls</a></li>
+
+            {% if user.is_authenticated %}
+                <li><a href="/logout">Cerra Sesión</a></li>
+                
+                {% else %}
+                <li><a href="/signup">Registrarse</a></li>
+                <li><a href="/login_view">Iniciar Sesión</a></li>
+            {% endif %}
+
+
+
+        </ul>
+    </nav>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>
