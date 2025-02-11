@@ -21,4 +21,4 @@ class Inspeccionambientes(models.Model):
     modulos = models.CharField(max_length=1, choices=ESTADO_CHOICES)
 
     def __str__(self):
-        return f"{self.laboratorio} - {self.fecha_registro.strftime('%Y-%m-%d %H:%M')}"
+        return f"{self.laboratorio} - {self.fecha_registro.strftime('%Y-%m-%d')}"

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<main>
+    <div>
+        <div class="col-md-8 offset-md-2 mt-5">
+            <style>
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 20px;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                    text-align: center;
+                }
+                th {
+                    background-color: #0765cf;
+                    color: white;
+                }
+                tr:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+            </style>
+            </head>
+            <body>
+            
+            <h2 style="text-align: center;"><strong>Lista de Inspecciones Registradas</strong></h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha de Registro</th>
+                        <th>Usuario</th>
+                        <th>Laboratorio</th>
+                        <th>Equipo de Cómputo</th>
+                        <th>Proyector Multimedia</th>
+                        <th>Red</th>
+                        <th>Fluido Eléctrico</th>
+                        <th>Orden y Limpieza</th>
+                        <th>Módulos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inspeccion in inspecciones %}
+                    <tr>
+                        <td>{{ inspeccion.fecha_registro }}</td>
+                        <td>{{ inspeccion.usuario.username }}</td>
+                        <td>{{ inspeccion.laboratorio }}</td>
+                        <td>{{ inspeccion.equipo_computo }}</td>
+                        <td>{{ inspeccion.proyector_multimedia }}</td>
+                        <td>{{ inspeccion.red }}</td>
+                        <td>{{ inspeccion.fluido_electrico }}</td>
+                        <td>{{ inspeccion.orden_limpieza }}</td>
+                        <td>{{ inspeccion.modulos }}</td>
+                        <td>
+                            <a href="{% url 'descargar_excel' %}" class="btn btn-primary">Descargar Reporte Excel</a>
+
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8">No hay inspecciones registradas.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</main>
+{% endblock %}

@@ -4,6 +4,11 @@ from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Inspeccionambientes
 from django.http import JsonResponse
+import openpyxl
+
+from django.conf import settings
+from openpyxl.utils import get_column_letter
+import os
 
 
 # Imortamos el login para poder autenticar al usuario dentro del navegador
@@ -62,8 +67,6 @@ def login_view(request):
 
 
 
-# def registrar_inspeccion(request):
-#     return render(request,'registrar_inspeccion.html')
 
 def registrar_inspeccion(request):
     if request.method == "POST":
@@ -91,10 +94,68 @@ def registrar_inspeccion(request):
         )
 
 
-         
-
         return JsonResponse({"mensaje": "Registro guardado exitosamente"}, status=200)
 
     return render(request, "registrar_inspeccion.html") 
 
 
+def read_inspeccion(request):
+    inspecciones = Inspeccionambientes.objects.all()
+    return render(request, "read_inspeccion.html", {"inspecciones": inspecciones})
+
+
+
+
+
+def exportar_inspeccion_con_plantilla(request):
+    # Ruta de la plantilla
+    template_path = os.path.join(os.path.dirname(__file__), "media", "plantilla.xlsx")
+    # Cargar la plantilla
+    wb = openpyxl.load_workbook(template_path)
+    ws = wb.active  # Usamos la primera hoja
+
+    # Obtener los registros
+    inspecciones = Inspeccionambientes.objects.all()
+
+    # Empezar a llenar desde la fila 2 (asumiendo que la fila 1 tiene encabezados)
+    fila = 5
+
+    for inspeccion in inspecciones:
+    # Asegurarse de escribir solo en celdas no combinadas
+        columnas = ["B", "Q", "D", "C", "E", "G", "I", "K", "M", "O"]
+        valores = [
+            inspeccion.id,
+            inspeccion.usuario.username,  # Asegúrate de que el campo 'usuario' existe
+            inspeccion.fecha_registro.strftime("%Y-%m-%d %H:%M"),
+            inspeccion.laboratorio,
+            inspeccion.equipo_computo,
+            inspeccion.proyector_multimedia,
+            inspeccion.red,
+            inspeccion.fluido_electrico,
+            inspeccion.orden_limpieza,
+            inspeccion.modulos,
+        ]
+
+    for col, valor in zip(columnas, valores):
+        cell = ws[f"{col}{fila}"]
+
+        # Verificar si la celda es parte de una combinación
+        if any(cell.coordinate in merged_range for merged_range in ws.merged_cells.ranges):
+            # Obtener la celda superior izquierda de la combinación
+            for merged_range in ws.merged_cells.ranges:
+                if cell.coordinate in merged_range:
+                    top_left_cell = ws.cell(row=merged_range.min_row, column=merged_range.min_col)
+                    top_left_cell.value = valor
+                    break
+        else:
+            cell.value = valor  # Escribir directamente si no está combinada
+
+    fila += 1  # Pasar a la siguiente fila
+
+    # Configurar la respuesta HTTP para la descarga
+    response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    response["Content-Disposition"] = 'attachment; filename="reporte_inspecciones.xlsx"'
+
+    # Guardar el archivo en la respuesta
+    wb.save(response)
+    return response

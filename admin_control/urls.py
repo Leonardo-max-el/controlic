@@ -25,5 +25,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('logout/', views.clouses, name='logout'),
     path('login_view/',views.login_view, name='login_view'),
-    path('registrar_inspeccion/',views.registrar_inspeccion, name='registrar_inspeccion')
+    path('registrar_inspeccion/',views.registrar_inspeccion, name='registrar_inspeccion'),
+    path('read_inspeccion/',views.read_inspeccion, name='read_inspeccion'),
+    path("descargar_excel/", views.exportar_inspeccion_con_plantilla, name="descargar_excel"),
 ]

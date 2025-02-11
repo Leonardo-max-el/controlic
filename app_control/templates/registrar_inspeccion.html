@@ -3,9 +3,9 @@
 
 {% block content %}
 
-<main class="container">
+<main class="container" style="width: 700px;">
     <div class="row">
-        <div class="col-md-8 offset-md-2 mt-5" >
+        <div class="col-md-8 offset-md- mt-5" >
                 <form  id="inspeccionForm" method="POST" action="/registrar_inspeccion/" class="card card-body">
                 {% if user.is_authenticated %}
                 <h4 class="text-center">Hola, {{ user.username }}. ¿Qué ambiente deseas registrar hoy?</h4>
@@ -13,18 +13,19 @@
                 {% csrf_token %}
                 <label for="ambiente" style="text-align: center; font-size: 40px"><strong>Ambientes</strong></label>
                         <select class="list-group" name="ambientes" id="">
-                        <option value="Laboratorio_A">Laboratorio A</option>
-                        <option value="Laboratorio_B">Laboratorio B</option>
-                        <option value="Laboratorio_C">Laboratorio C</option>
-                        <option value="Laboratorio_D">Laboratorio D</option>
-                        <option value="Laboratorio_E">Laboratorio E</option>
-                        <option value="Laboratorio_F">Laboratorio F</option>
-                        <option value="Laboratorio_G">Laboratorio G</option>
-                        <option value="Laboratorio_H">Laboratorio H</option>
-                        <option value="Aula_101">Aula 101</option>
-                        <option value="Aula_102">Aula 102</option>
+                        <option value="Laboratorio A">Laboratorio A</option>
+                        <option value="Laboratorio B">Laboratorio B</option>
+                        <option value="Laboratorio C">Laboratorio C</option>
+                        <option value="Laboratorio D">Laboratorio D</option>
+                        <option value="Laboratorio E">Laboratorio E</option>
+                        <option value="Laboratorio F">Laboratorio F</option>
+                        <option value="Laboratorio G">Laboratorio G</option>
+                        <option value="Laboratorio H">Laboratorio H</option>
+                        <option value="Aula 101">Aula 101</option>
+                        <option value="Aula 102">Aula 102</option>
 
-                    </select>
+                        </select>
+                        
                     <br>
                     <table class="table table-striped table-hover" >
                         <tr style="text-align: center;">
@@ -84,6 +85,7 @@
             .then(response => response.json())
             .then(data => {
                 alert(data.mensaje);
+                location.reload();
             })
             .catch(error => console.error("Error:", error));
         });
