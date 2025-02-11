@@ -11,9 +11,8 @@
                 <h4 class="text-center">Hola, {{ user.username }}. ¿Qué ambiente deseas registrar hoy?</h4>
                 {% endif %}
                 {% csrf_token %}
-                <label for="ambiente" >Ambientes</label>
-
-                         <select name="ambientes" id="">
+                <label for="ambiente" style="text-align: center; font-size: 40px"><strong>Ambientes</strong></label>
+                        <select class="list-group" name="ambientes" id="">
                         <option value="Laboratorio_A">Laboratorio A</option>
                         <option value="Laboratorio_B">Laboratorio B</option>
                         <option value="Laboratorio_C">Laboratorio C</option>
@@ -26,63 +25,48 @@
                         <option value="Aula_102">Aula 102</option>
 
                     </select>
-            
-                    <table class="table table-dark table-striped"">
-                        <tr>
+                    <br>
+                    <table class="table table-striped table-hover" >
+                        <tr style="text-align: center;">
                             <th>Elemento</th>
-                            <th>Correcto</th>
+                            <th >Correcto</th>
                             <th>Observado</th>
                         </tr>
                         <tr>
                             <td>Equipo de Cómputo</td>
-                            <td><input type="radio" name="equipo_computo" value="C" checked></td>
-                            <td><input type="radio" name="equipo_computo" value="O"></td>
+                            <td style="text-align: center;"><input type="radio" name="equipo_computo" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="equipo_computo" value="O" style="accent-color: red;"></td>
                         </tr>
                         <tr>
                             <td>Proyector Multimedia</td>
-                            <td><input type="radio" name="proyector_multimedia" value="C" checked></td>
-                            <td><input type="radio" name="proyector_multimedia" value="O"></td>
+                            <td style="text-align: center;"><input type="radio" name="proyector_multimedia" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="proyector_multimedia" value="O" style="accent-color: red;"></td>
                         </tr>
                         <tr>
                             <td>Red</td>
-                            <td><input type="radio" name="red" value="C" checked></td>
-                            <td><input type="radio" name="red" value="O"></td>
+                            <td style="text-align: center;"><input type="radio" name="red" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="red" value="O" style="accent-color: red;"></td>
+                        </tr>
+                        <tr>
+                            <td>Fluido Eléctrico</td>
+                            <td style="text-align: center;"><input type="radio" name="fluido_electrico" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="fluido_electrico" value="O" style="accent-color: red;"></td>
                         </tr>
                         
-              
-                    </table>
+                        <tr>
+                            <td>Orden y Limpieza</td>
+                            <td style="text-align: center;"><input type="radio" name="orden_limpieza" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="orden_limpieza" value="O" style="accent-color: red;"></td>
+                        </tr>
 
-                <label>Equipo de Cómputo:</label>
-                <input type="radio" name="equipo_computo" value="C" checked> Correcto
-                <input type="radio" name="equipo_computo" value="O"> Observación
-                <br>
-            
-                <label>Proyector Multimedia:</label>
-                <input type="radio" name="proyector_multimedia" value="C" checked> Correcto
-                <input type="radio" name="proyector_multimedia" value="O"> Observación
-                <br>
-            
-                <label>Red:</label>
-                <input type="radio" name="red" value="C" checked> Correcto
-                <input type="radio" name="red" value="O"> Observación
-                <br>
-            
-                <label>Fluido Eléctrico:</label>
-                <input type="radio" name="fluido_electrico" value="C" checked> Correcto
-                <input type="radio" name="fluido_electrico" value="O"> Observación
-                <br>
-            
-                <label>Orden y Limpieza:</label>
-                <input type="radio" name="orden_limpieza" value="C" checked> Correcto
-                <input type="radio" name="orden_limpieza" value="O"> Observación
-                <br>
-            
-                <label>Módulos:</label>
-                <input type="radio" name="modulos" value="C" checked> Correcto
-                <input type="radio" name="modulos" value="O"> Observación
-                <br>
-            
-                <button class="btn btn-primary type="submit">Guardar</button>
+                        <tr>
+                            <td>Módulos</td>
+                            <td style="text-align: center;"><input type="radio" name="modulos" value="C" checked></td>
+                            <td style="text-align: center;"><input type="radio" name="modulos" value="O" style="accent-color: red;"></td>
+                        </tr>
+
+                    </table>            
+                <button class="btn btn-primary" type="submit">Guardar</button>
             </form>
 
 

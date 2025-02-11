@@ -96,3 +96,5 @@ def registrar_inspeccion(request):
         return JsonResponse({"mensaje": "Registro guardado exitosamente"}, status=200)
 
     return render(request, "registrar_inspeccion.html") 
+
+
