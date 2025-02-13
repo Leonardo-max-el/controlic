@@ -65,7 +65,7 @@ def login_view(request):
             login(request, user)
             return redirect('registrar_inspeccion')
 
-
+# cambiar el laoratorio por ambientes
 
 def registrar_inspeccion(request):
     if request.method == "POST":
@@ -110,9 +110,6 @@ def read_inspeccion(request):
 
 
 
-
-
-
 def exportar_inspeccion_con_plantilla(request):
     # Ruta de la plantilla
     template_path = os.path.join(os.path.dirname(__file__), "media", "plantilla.xlsx")
@@ -123,41 +120,41 @@ def exportar_inspeccion_con_plantilla(request):
     # Obtener los registros
     inspecciones = Inspeccionambientes.objects.all()
 
-    # Empezar a llenar desde la fila 2 (asumiendo que la fila 1 tiene encabezados)
-    fila = 5
+    fila = 11  # Suponiendo que los registros inician en la fila 5
 
     for inspeccion in inspecciones:
-    # Asegurarse de escribir solo en celdas no combinadas
-        columnas = ["B", "Q", "C", "D", "E", "G", "I", "K", "M", "O","R"]
-        valores = [
-            inspeccion.id,
-            inspeccion.usuario.username,  # Asegúrate de que el campo 'usuario' existe
-            inspeccion.fecha_registro.strftime("%Y-%m-%d %H:%M"),
+        columnas_fijas = ["D", "E", "R", "S"]  # Columnas fijas (ID, Usuario, Fecha, Laboratorio, Observación)
+        valores_fijos = [
+            # inspeccion.id,
             inspeccion.laboratorio,
-            inspeccion.equipo_computo,
-            inspeccion.proyector_multimedia,
-            inspeccion.red,
-            inspeccion.fluido_electrico,
-            inspeccion.orden_limpieza,
-            inspeccion.modulos,
+            inspeccion.fecha_registro.strftime("%Y-%m-%d %H:%M"),
+            inspeccion.usuario.username,  
             inspeccion.observacion
         ]
 
-    for col, valor in zip(columnas, valores):
-        cell = ws[f"{col}{fila}"]
+        # Asignamos los valores fijos (ID, Usuario, Fecha, etc.)
+        for col, valor in zip(columnas_fijas, valores_fijos):
+            ws[f"{col}{fila}"] = valor
 
-        # Verificar si la celda es parte de una combinación
-        if any(cell.coordinate in merged_range for merged_range in ws.merged_cells.ranges):
-            # Obtener la celda superior izquierda de la combinación
-            for merged_range in ws.merged_cells.ranges:
-                if cell.coordinate in merged_range:
-                    top_left_cell = ws.cell(row=merged_range.min_row, column=merged_range.min_col)
-                    top_left_cell.value = valor
-                    break
-        else:
-            cell.value = valor  # Escribir directamente si no está combinada
+        # Definir los valores y sus respectivas columnas para "C" y "O"
+        valores_dinamicos = [
+            inspeccion.equipo_computo, 
+            inspeccion.proyector_multimedia, 
+            inspeccion.red, 
+            inspeccion.fluido_electrico, 
+            inspeccion.orden_limpieza, 
+            inspeccion.modulos
+        ]
 
-    fila += 1  # Pasar a la siguiente fila
+        # Asignamos "X" en la columna correcta según el valor de cada campo
+        for col_c, col_o, valor in zip(["F", "H", "J", "L", "N", "P"], ["G", "I", "K","M","O","Q"], valores_dinamicos):
+            if valor == "C":
+                ws[f"{col_c}{fila}"] = "X"  # Si es "C", lo pone en su columna
+            elif valor == "O":
+                ws[f"{col_o}{fila}"] = "X"  # Si es "O", lo pone en su columna correspondiente
+
+        fila += 1  # Pasamos a la siguiente fila
+
 
     # Configurar la respuesta HTTP para la descarga
     response = HttpResponse(content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
