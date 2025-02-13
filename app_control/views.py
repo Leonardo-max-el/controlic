@@ -67,10 +67,8 @@ def login_view(request):
 
 
 
-
 def registrar_inspeccion(request):
     if request.method == "POST":
-
         # Obtener los datos del formulario
         usuario = request.user
         laboratorio = request.POST.get("ambientes")
@@ -80,6 +78,11 @@ def registrar_inspeccion(request):
         fluido_electrico = request.POST.get("fluido_electrico")
         orden_limpieza = request.POST.get("orden_limpieza")
         modulos = request.POST.get("modulos")
+        
+        # Asignar un valor por defecto si `observacion` está vacío o None
+        observacion = request.POST.get("observaciones", "").strip()
+        if not observacion:
+            observacion = "NO SE ENCONTRARON OBSERVACIONES"
 
         # Guardar en la base de datos
         Inspeccionambientes.objects.create(
@@ -90,18 +93,21 @@ def registrar_inspeccion(request):
             red=red,
             fluido_electrico=fluido_electrico,
             orden_limpieza=orden_limpieza,
-            modulos=modulos
+            modulos=modulos,
+            observacion=observacion  # Aseguramos que nunca sea None
         )
-
 
         return JsonResponse({"mensaje": "Registro guardado exitosamente"}, status=200)
 
-    return render(request, "registrar_inspeccion.html") 
+    return render(request, "registrar_inspeccion.html")
+
+
 
 
 def read_inspeccion(request):
     inspecciones = Inspeccionambientes.objects.all()
     return render(request, "read_inspeccion.html", {"inspecciones": inspecciones})
+
 
 
 
@@ -122,7 +128,7 @@ def exportar_inspeccion_con_plantilla(request):
 
     for inspeccion in inspecciones:
     # Asegurarse de escribir solo en celdas no combinadas
-        columnas = ["B", "Q", "D", "C", "E", "G", "I", "K", "M", "O"]
+        columnas = ["B", "Q", "C", "D", "E", "G", "I", "K", "M", "O","R"]
         valores = [
             inspeccion.id,
             inspeccion.usuario.username,  # Asegúrate de que el campo 'usuario' existe
@@ -134,6 +140,7 @@ def exportar_inspeccion_con_plantilla(request):
             inspeccion.fluido_electrico,
             inspeccion.orden_limpieza,
             inspeccion.modulos,
+            inspeccion.observacion
         ]
 
     for col, valor in zip(columnas, valores):

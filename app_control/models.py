@@ -19,6 +19,7 @@ class Inspeccionambientes(models.Model):
     fluido_electrico = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     orden_limpieza = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     modulos = models.CharField(max_length=1, choices=ESTADO_CHOICES)
+    observacion = models.TextField(max_length=200, default="NO SE ENCONTRARON OBSERVACIONES", blank=True)
 
     def __str__(self):
         return f"{self.laboratorio} - {self.fecha_registro.strftime('%Y-%m-%d')}"

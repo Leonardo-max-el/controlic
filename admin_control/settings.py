@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'admin_control.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'db_controlic',
+        'NAME': 'db_inspeccion',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': '127.0.0.1',

@@ -66,12 +66,20 @@
                             <td style="text-align: center;"><input type="radio" name="modulos" value="O" style="accent-color: red;"></td>
                         </tr>
 
+                        <tr>
+                            <td>observacion</td>
+                            <td>
+                                <textarea name="observacion" type="text" id="" cols="30" rows="10" style="font-style: italic; font-size: 12px;" autocapitalize="characters" placeholder="NO SE ENCONTRARON OBSERVACIONES"></textarea>
+                            </td>
+                        </tr>
+                        
                     </table>            
                 <button class="btn btn-primary" type="submit">Guardar</button>
             </form>
 
 
         </div>
+        
         <script>
         document.getElementById("inspeccionForm").addEventListener("submit", function(event) {
             event.preventDefault();
