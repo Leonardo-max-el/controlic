@@ -33,7 +33,7 @@
                     <tr>
                         <th>Fecha de Registro</th>
                         <th>Usuario</th>
-                        <th>Laboratorio</th>
+                        <th>Ambientes</th>
                         <th>Equipo de Cómputo</th>
                         <th>Proyector Multimedia</th>
                         <th>Red</th>
@@ -49,7 +49,7 @@
                     <tr>
                         <td>{{ inspeccion.fecha_registro }}</td>
                         <td>{{ inspeccion.usuario.username }}</td>
-                        <td>{{ inspeccion.laboratorio }}</td>
+                        <td>{{ inspeccion.tipo_ambiente }} {{ inspeccion.ambiente }}</td>
                         <td>{{ inspeccion.equipo_computo }}</td>
                         <td>{{ inspeccion.proyector_multimedia }}</td>
                         <td>{{ inspeccion.red }}</td>
@@ -58,7 +58,9 @@
                         <td>{{ inspeccion.modulos }}</td>
                         <td>{{ inspeccion.observacion }}</td>
                         <td>
-                            <a href="{% url 'descargar_excel' %}" class="btn btn-success">Descargar Reporte Excel</a>
+                            <a href="{% url 'descargar_excel' %}" class="btn btn-success">
+                                <i class="fa-solid fa-file-arrow-down"></i> Excel
+                            </a>
 
                         </td>
                     </tr>
@@ -69,7 +71,46 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+
+<style>
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+.pagination .step-links {
+    display: inline-block;
+    padding: 10px;
+}
+.pagination a, .pagination span {
+    padding: 8px 12px;
+    margin: 2px;
+    text-decoration: none;
+    background-color: #0765cf;
+    color: white;
+    border-radius: 5px;
+}
+.pagination a:hover {
+    background-color: #054b9a;
+}
+</style>
+            <div class="pagination">
+                <span class="step-links">
+                    {% if inspecciones.has_previous %}
+                        <a href="?page=1">&laquo; Primero</a>
+                        <a href="?page={{ inspecciones.previous_page_number }}"><i class="fa-solid fa-backward"></i></a>
+                    {% endif %}
             
+                    <span class="current">
+                        Página {{ inspecciones.number }} de {{ inspecciones.paginator.num_pages }}.
+                    </span>
+            
+                    {% if inspecciones.has_next %}
+                        <a href="?page={{ inspecciones.next_page_number }}"><i class="fa-solid fa-forward"></i></a>
+                        <a href="?page={{ inspecciones.paginator.num_pages }}">Último &raquo;</a>
+                    {% endif %}
+                </span>
+            </div
         </div>
     </div>
 </main>

@@ -23,9 +23,9 @@
             
                         // Opciones para cada tipo de ambiente
                         let opciones = {
-                            "Laboratorio de Computo": ["A", "B", "C", "D", "E", "F", "G", "H"],
-                            "Aula": ["B101", "B102", "B103", "B104", "B105", "B201", "B202", "B203", "B204", "B205", "B206", "B301", "B302", "B303", "B304", "B305", "B306", "B401", "B403", "B404", "B405", "B406", "B505"],
-                            "Taller": ["DIBUJO", "MODAS", "MÚLTIPLE 1", "MÚLTIPLE 2", "MÚLTIPLE 3"]
+                            "LABORATORIO DE CÓMPUTO": ["A", "B", "C", "D", "E", "F", "G", "H"],
+                            "AULA": ["B101", "B102", "B103", "B104", "B105", "B201", "B202", "B203", "B204", "B205", "B206", "B301", "B302", "B303", "B304", "B305", "B306", "B401", "B403", "B404", "B405", "B406", "B505"],
+                            "TALLER": ["DIBUJO", "MODAS", "MÚLTIPLE 1", "MÚLTIPLE 2", "MÚLTIPLE 3"]
                         };
             
                         // Añadir las opciones correspondientes
@@ -43,15 +43,15 @@
             <body>
             
             <div class="row"  style=" margin: 10px 0 10px 0; width: 400px; font-size: 18px; display: flex; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif; text-align: center;">
-                <select name="ambientes" style="text-align: center; margin-bottom: 10px; font-weight: bold; " id="ambientes" onchange="actualizarIdentificadores()">
+                <select name="tipo_ambiente" style="text-align: center; margin-bottom: 10px; font-weight: bold; " id="ambientes" onchange="actualizarIdentificadores()">
                     <option value="" selected disabled>Seleccione un ambiente</option>
-                    <option value="Laboratorio de Computo">Laboratorio de Computo</option>
-                    <option value="Aula">Aula</option>
-                    <option value="Taller">Taller</option>
+                    <option value="LABORATORIO DE CÓMPUTO" autocapitalize="characters">LABORATORIO DE CÓMPUTO</option>
+                    <option value="AULA" autocapitalize="characters">AULA</option>
+                    <option value="TALLER" autocapitalize="characters">TALLER</option>
                 </select>
             
                 <label for="identificador"></label>
-                <select id="identificador" style="text-align: center;" name="identificador">
+                <select id="identificador" style="text-align: center;" name="ambiente">
                     <option value="" selected disabled>Seleccione un identificador</option>
                 </select>
             </div>

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .models import Inspeccionambientes
 from django.http import JsonResponse
 import openpyxl
+from django.core.paginator import Paginator
 
 from django.conf import settings
 from openpyxl.utils import get_column_letter
@@ -71,7 +72,8 @@ def registrar_inspeccion(request):
     if request.method == "POST":
         # Obtener los datos del formulario
         usuario = request.user
-        laboratorio = request.POST.get("ambientes")
+        tipo_ambiente = request.POST.get("tipo_ambiente")
+        ambiente = request.POST.get("ambiente")
         equipo_computo = request.POST.get("equipo_computo")
         proyector_multimedia = request.POST.get("proyector_multimedia")
         red = request.POST.get("red")
@@ -87,7 +89,10 @@ def registrar_inspeccion(request):
         # Guardar en la base de datos
         Inspeccionambientes.objects.create(
             usuario=usuario,
-            laboratorio=laboratorio,
+
+            tipo_ambiente=tipo_ambiente,
+            ambiente=ambiente,
+  
             equipo_computo=equipo_computo,
             proyector_multimedia=proyector_multimedia,
             red=red,
@@ -105,9 +110,12 @@ def registrar_inspeccion(request):
 
 
 def read_inspeccion(request):
-    inspecciones = Inspeccionambientes.objects.all()
+    inspecciones_list = Inspeccionambientes.objects.all()
+    paginator = Paginator(inspecciones_list, 5)  # 10 elementos por página
+    page_number = request.GET.get('page')
+    inspecciones = paginator.get_page(page_number)
+    
     return render(request, "read_inspeccion.html", {"inspecciones": inspecciones})
-
 
 
 def exportar_inspeccion_con_plantilla(request):
@@ -126,8 +134,9 @@ def exportar_inspeccion_con_plantilla(request):
         columnas_fijas = ["D", "E", "R", "S"]  # Columnas fijas (ID, Usuario, Fecha, Laboratorio, Observación)
         valores_fijos = [
             # inspeccion.id,
-            inspeccion.laboratorio,
-            inspeccion.fecha_registro.strftime("%Y-%m-%d %H:%M"),
+            inspeccion.tipo_ambiente,
+            inspeccion.ambiente,
+            # inspeccion.fecha_registro.strftime("%Y-%m-%d %H:%M"),
             inspeccion.usuario.username,  
             inspeccion.observacion
         ]

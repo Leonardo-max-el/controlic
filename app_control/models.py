@@ -12,7 +12,10 @@ class Inspeccionambientes(models.Model):
     
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     fecha_registro = models.DateTimeField(auto_now_add=True)
-    laboratorio = models.CharField(max_length=50, choices=ESTADO_CHOICES)
+    
+    tipo_ambiente = models.CharField(max_length=50, choices=ESTADO_CHOICES)
+    ambiente = models.CharField(max_length=50, choices=ESTADO_CHOICES)
+    
     equipo_computo = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     proyector_multimedia = models.CharField(max_length=1, choices=ESTADO_CHOICES)
     red = models.CharField(max_length=1, choices=ESTADO_CHOICES)
