@@ -3,7 +3,8 @@
 <head>
 
     <link rel="stylesheet" href="../static/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+<!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://kit.fontawesome.com/8a2b99a59c.js" crossorigin="anonymous"></script>
@@ -11,34 +12,36 @@
     <title>Control de Laboratorios</title>
 </head>
 <body>
-
     <nav class="navbar navbar-expand-lg bg-dark navbar-dark"> ">
         <div class="container">
           <a class="navbar-brand" href="#">Inspección laboratorios</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                
-            
-                {% if user.is_authenticated %}
-                    <li class="nav-item"><a class="nav-link" href="/logout">Cerra Sesión</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/read_inspeccion">Ver Registros</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/registrar_inspeccion">Registrar</a></li>
-                {% else %}
-                    <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/signup">Registrarse</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/login_view">Iniciar Sesión</a></li>
+          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <ul class="navbar-nav ms-auto">
+                  
+              
+                  {% if user.is_authenticated %}
+                      <li class="nav-item"><a class="nav-link" href="/logout">Cerra Sesión</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/read_inspeccion">Ver Registros</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/registrar_inspeccion">Registrar</a></li>
+                  {% else %}
+                      <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/signup">Registrarse</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/login_view">Iniciar Sesión</a></li>
 
-                {% endif %}
-            </ul>
-          </div>
+                  {% endif %}
+              </ul>
+            </div>
           </div>
         </div>
       </nav>
 
     {% block content %}
     {% endblock %}
+    <!-- Bootstrap JS (Requiere Popper.js) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>

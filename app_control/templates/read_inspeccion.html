@@ -4,7 +4,7 @@
 
 <main>
     <div>
-        <div class="col-md-9 offset-md-2 mt-5">
+        <div class="col-md-9 offset-md-2 mt-5" class="table-responsive">
             <style>
                 table {
                     width: 100%;
@@ -28,49 +28,65 @@
             <body>
             
             <h2 style="text-align: center;"><strong>Lista de Inspecciones Registradas</strong></h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha de Registro</th>
-                        <th>Usuario</th>
-                        <th>Ambientes</th>
-                        <th>Equipo de Cómputo</th>
-                        <th>Proyector Multimedia</th>
-                        <th>Red</th>
-                        <th>Fluido Eléctrico</th>
-                        <th>Orden y Limpieza</th>
-                        <th>Observaciones</th>
-                        <th>Módulos</th>
-                        <th>Archivo Excel</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for inspeccion in inspecciones %}
-                    <tr>
-                        <td>{{ inspeccion.fecha_registro }}</td>
-                        <td>{{ inspeccion.usuario.username }}</td>
-                        <td>{{ inspeccion.tipo_ambiente }} {{ inspeccion.ambiente }}</td>
-                        <td>{{ inspeccion.equipo_computo }}</td>
-                        <td>{{ inspeccion.proyector_multimedia }}</td>
-                        <td>{{ inspeccion.red }}</td>
-                        <td>{{ inspeccion.fluido_electrico }}</td>
-                        <td>{{ inspeccion.orden_limpieza }}</td>
-                        <td>{{ inspeccion.modulos }}</td>
-                        <td>{{ inspeccion.observacion }}</td>
-                        <td>
-                            <a href="{% url 'descargar_excel' %}" class="btn btn-success">
-                                <i class="fa-solid fa-file-arrow-down"></i> Excel
-                            </a>
-
-                        </td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="8">No hay inspecciones registradas.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            <div class="container mt-4">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Fecha de Registro</th>
+                                <th>Usuario</th>
+                                <th>Ambientes</th>
+                                <th>Equipo de Cómputo</th>
+                                <th>Proyector Multimedia</th>
+                                <th>Red</th>
+                                <th>Fluido Eléctrico</th>
+                                <th>Orden y Limpieza</th>
+                                <th>Observaciones</th>
+                                <th>Módulos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for inspeccion in inspecciones %}
+                            <tr>
+                                <td>{{ inspeccion.fecha_registro }}</td>
+                                <td>{{ inspeccion.usuario.username }}</td>
+                                <td>{{ inspeccion.tipo_ambiente }} {{ inspeccion.ambiente }}</td>
+                                <td>{{ inspeccion.equipo_computo }}</td>
+                                <td>{{ inspeccion.proyector_multimedia }}</td>
+                                <td>{{ inspeccion.red }}</td>
+                                <td>{{ inspeccion.fluido_electrico }}</td>
+                                <td>{{ inspeccion.orden_limpieza }}</td>
+                                <td>{{ inspeccion.observacion }}</td>
+                                <td>{{ inspeccion.modulos }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="10" class="text-center">No hay inspecciones registradas.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            
+                <!-- Formulario Responsivo -->
+                <div class="row justify-content-center mt-3">
+                    <div class="col-md-6 col-12">
+                        <form method="GET" action="{% url 'descargar_excel' %}" class="p-3 border rounded shadow-sm bg-light">
+                            <div class="mb-3">
+                                <label for="fecha_inicio" class="form-label">Desde:</label>
+                                <input type="date" id="fecha_inicio" name="fecha_inicio" class="form-control" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="fecha_fin" class="form-label">Hasta:</label>
+                                <input type="date" id="fecha_fin" name="fecha_fin" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">
+                                <i class="fa-solid fa-file-arrow-down"></i> Descargar Excel
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
 
 <style>

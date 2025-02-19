@@ -1,1 +1,8 @@
+/* Cambia el color del input cuando está seleccionado */
 
+
+
+
+ .parent:last-child {
+    accent-color: red;   
+ }
